@@ -1,0 +1,26 @@
+
+QGIS - Layer / Field Combos Manager
+
+This class is useful if you want to simply manage a layer combo, and
+eventually relate it with one (or several) field combos.
+
+The field combos are filled with the names of columns of the currently
+selected layer in the layer combo.
+
+In your plugin, create first a LayerCombo:
+
+self.LayerComboManager = LayerCombo(self.iface, self.layerComboWidget)
+For more detailed options, see the LayerCombo documentation.
+
+Then, associates some FieldCombo:
+self.firstFieldComboManager = FieldCombo(self.firstFieldComboWidget, self.LayerComboManager)
+For more detailed options, see the FieldCombo documentation.
+
+You have to save the FieldCombo in self.something, so the variable is not
+getting out of scope in python.
+
+The classes offers some convenience methods:
+LayerCombo: getLayer()
+FieldCombo: getFieldName(), getFieldAlias(), getFieldIndex()
+
+
