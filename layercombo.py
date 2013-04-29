@@ -1,46 +1,8 @@
 from PyQt4.QtCore import QVariant
 from qgis.core import QGis, QgsMapLayerRegistry, QgsMapLayer
 
-########################################################################
-# creates a layer combo:
-#
-#     widget:       the qcombobox widget
-#
-#     initLayer:    the initally selected layer ID or a lambda function
-#                   returning the ID (it could look for a value in settings)
-#
-#     options:      a dictionnary of options: {"opt1": val1, "opt2": val2, etc.}
-#                   possible options are listed here under (default values are first listed)
-#
-#     groupLayers:  False/True
-#                   group layers in combobox according to the legend interface groups
-#
-# (1) hasGeometry:  None/True/False
-#                   restrain the possible selection of layers to layers having or not geometry
-#                   None = all
-#
-# (1) geomType:     None/QGis.Point/QGis.Line/QGis.Polygon
-#                   restrain the possible selection of layers to a certain type of geometry
-#                   geomType must be a GeometryType
-#                   http://qgis.org/api/classQGis.html#a09947eb19394302eeeed44d3e81dd74b
-#                   None = all
-#
-#     dataProvider: None/postgres/etc.
-#                   filter the layers based on the data provider name
-#                   None = all
-#
-#
-#    finishInit:    True/False
-#                   if False, the combo box will not be initiated (filled with layers)
-#                   Setting this option to False is useful if you want the manager to be returned before it is filled
-#                   (in case you use the manager methods in a method called by a signal from the combo)
-#
-# (1): used for vector layer combos
-#
-
-
 class LayerCombo():
-    def __init__(self, legendInterface, widget, initLayer="", layerType=None, options={}):
+    def __init__(self, legendInterface, widget, initLayer="", options={}, layerType=None):
         self.legendInterface = legendInterface
         self.widget = widget
         if hasattr(initLayer, '__call__'):
@@ -147,9 +109,9 @@ class LayerCombo():
 
 class VectorLayerCombo(LayerCombo):
     def __init__(self, iface, widget, initLayer="", options={}):
-        LayerCombo.__init__(self, iface, widget, initLayer, QgsMapLayer.VectorLayer, options)
+        LayerCombo.__init__(self, iface, widget, initLayer, options, QgsMapLayer.VectorLayer)
 
 
 class RasterLayerCombo(LayerCombo):
     def __init__(self, iface, widget, initLayer="", options={}):
-        LayerCombo.__init__(self, iface, widget, initLayer, QgsMapLayer.RasterLayer, options)
+        LayerCombo.__init__(self, iface, widget, initLayer, options, QgsMapLayer.RasterLayer)

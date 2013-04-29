@@ -1,18 +1,3 @@
-########################################################################
-# creates a field combo:
-#
-#    widget:    the qcombobox widget
-#
-#    vectorLayerCombo: the parent combobox defining the used vector layer
-#
-#    initField: the initially selected field name or a lambda function
-#               returning the name (it could look for a value in settings)
-#
-#    fieldType: restrain the possible selection to a certain type of field
-#               http://qgis.org/api/classQgsField.html#a00409d57dc65d6155c6d08085ea6c324
-#               http://developer.qt.nokia.com/doc/qt-4.8/qmetatype.html#Type-enum
-#
-
 from PyQt4.QtCore import SIGNAL, QObject, QVariant
 from qgis.core import QgsVectorLayer
 
