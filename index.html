@@ -39,9 +39,7 @@
         <ul></ul>
       </nav>
       <section>
-        <h1>QGIS Combo Manager</h1>
-
-<h2>Quick start</h2>
+        <h2>Quick start</h2>
 
 <p><a href="http://www.qgis.org">QGIS</a> Combo Manager is a python module to easily manage a combo box with
 a layer list and eventually relate it with one or several combos with
@@ -62,6 +60,17 @@ selected layer in the layer combo.</p>
 getting out of scope in python.</p>
 
 <p>The classes offers some convenience methods: <em>getLayer()</em>, for layer combos, and <em>getFieldName()</em>, <em>getFieldAlias()</em>, <em>getFieldIndex()</em> for field combos.</p>
+
+<h2>Installing the module</h2>
+
+<p>To use this module you can easily copy the files and put them in your project.
+A more elegant way is to use git submodule. Hence, you can keep up with latest improvements. In you plugin directory, do</p>
+
+<p><code>git submodule add git://github.com/3nids/qgiscombomanager.git</code></p>
+
+<p>Then, import the needed classes:</p>
+
+<p><code>from qgiscombomanager import LayerCombo, RasterLayerCombo, VectorLayerCombo, FieldCombo</code></p>
 
 <h2>Layer Combos</h2>
 
