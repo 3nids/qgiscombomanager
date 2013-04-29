@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Qgis Combo Manager by 3nids</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/main.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+
+      <header>
+        <h1>Qgis Combo Manager</h1>
+        <p>QGIS Combo Manager is a python module to easily manage a combo box with a layer list and eventually relate it with one or several combos with list of corresponding fields.</p>
+      </header>
+
+      <div id="banner">
+        <span id="logo"></span>
+
+        <a href="https://github.com/3nids/qgiscombomanager" class="button fork"><strong>View On GitHub</strong></a>
+        <div class="downloads">
+          <span>Downloads:</span>
+          <ul>
+            <li><a href="https://github.com/3nids/qgiscombomanager/zipball/master" class="button">ZIP</a></li>
+            <li><a href="https://github.com/3nids/qgiscombomanager/tarball/master" class="button">TAR</a></li>
+          </ul>
+        </div>
+      </div><!-- end banner -->
+
+    <div class="wrapper">
+      <nav>
+        <ul></ul>
+      </nav>
+      <section>
+        <h1>QGIS Combo Manager</h1>
+
+<h2>Quick start</h2>
+
+<p><a href="http://www.qgis.org">QGIS</a> Combo Manager is a python module to easily manage a combo box with
+a layer list and eventually relate it with one or several combos with
+list of corresponding fields.</p>
+
+<p>The field combos are filled with the names of columns of the currently
+selected layer in the layer combo.</p>
+
+<p>In your plugin, create first a <em>LayerCombo</em>:</p>
+
+<p><code>self.LayerComboManager = VectorLayerCombo(iface.legendInterface(), self.layerComboWidget)</code></p>
+
+<p>Then, associates some <em>FieldCombo</em>:</p>
+
+<p><code>self.myFieldComboManager = FieldCombo(self.myFieldComboManager, self.LayerComboManager)</code></p>
+
+<p>The managers (layer or field) must be saved as a class property (self.something), so the variable is not
+getting out of scope in python.</p>
+
+<p>The classes offers some convenience methods: <em>getLayer()</em>, for layer combos, and <em>getFieldName()</em>, <em>getFieldAlias()</em>, <em>getFieldIndex()</em> for field combos.</p>
+
+<h2>Layer Combos</h2>
+
+<p>A combo box can be assigned to list the layers. Three classes are available:</p>
+
+<ul>
+<li><em>LayerCombo</em></li>
+<li><em>VectorLayerCombo</em></li>
+<li><em>RasterLayerCombo</em></li>
+</ul><p><code>LayerCombo(legendInterface, widget, initLayer="", options={}, layerType=None)</code></p>
+
+<p><em>VectorLayerCombo</em> and <em>RasterLayerCombo</em> are convenient classes which are calling the main LayerCombo class with the same parameters specifying the <em>layerType</em>.</p>
+
+<ul>
+<li>legendInterface: give the legendInterface (used to display layers in the same way as in the legend)</li>
+<li>widget: the QComboBox widget</li>
+<li>initLayer: the initally selected layer ID or a lambda function returning the ID (it could look for a value in settings)</li>
+<li>options: a dictionnary of options: {"opt1": val1, "opt2": val2, etc.}. Options are listed hereunder (default values are first listed).</li>
+</ul><p><strong>Options</strong></p>
+
+<ul>
+<li>groupLayers: False/True. Groups layers in combobox according to the legend interface groups</li>
+<li>hasGeometry(1): None/True/False. Restrains the possible selection of layers to layers having or not geometry (None = all).</li>
+<li>geomType(1): None/QGis.Point/QGis.Line/QGis.Polygon. Restrains the possible selection of layers to a certain <a href="http://qgis.org/api/classQGis.html#a09947eb19394302eeeed44d3e81dd74b">type of geometry</a>. (None = all)</li>
+<li>dataProvider: None/postgres/etc. Filters the layers based on the data provider name (None = all).</li>
+<li>finishInit: True/False. If False, the combo box will not be initiated (filled with layers). this might useful if you want the manager to be returned before it is filled with layers.</li>
+</ul><p>(1): used for vector layer combos</p>
+
+<h2>Field combos</h2>
+
+<p>A combo box can be assigned to list the fields related to a given VectorLayerCombo.</p>
+
+<p><code>FieldCombo(widget, vectorLayerCombo, initField="", fieldType=None)</code></p>
+
+<ul>
+<li>widget: the qcombobox widget</li>
+<li>vectorLayerCombo: the parent combobox defining the used vector layer</li>
+<li>initField: the initially selected field name or a lambda function returning the name (it could look for a value in settings)</li>
+<li>fieldType: restrain the possible selection to a certain type of field (see <a href="http://qgis.org/api/classQgsField.html#a00409d57dc65d6155c6d08085ea6c324">QGIS doc</a> or <a href="http://developer.qt.nokia.com/doc/qt-4.8/qmetatype.html#Type-enum">Qt doc</a>).</li>
+</ul>
+      </section>
+      <footer>
+        <p>Project maintained by <a href="https://github.com/3nids">3nids</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
