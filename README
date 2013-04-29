@@ -1,5 +1,3 @@
-# QGIS Combo Manager
-
 ## Quick start
 
 [QGIS](http://www.qgis.org) Combo Manager is a python module to easily manage a combo box with
@@ -27,9 +25,7 @@ The classes offers some convenience methods: _getLayer()_, for layer combos, and
 ## Installing the module
 
 To use this module you can easily copy the files and put them in your project.
-A more elegant way is to use git submodule
-
-In you plugin directory, do
+A more elegant way is to use git submodule. Hence, you can keep up with latest improvements. In you plugin directory, do
 
 `git submodule add git://github.com/3nids/qgiscombomanager.git`
 
