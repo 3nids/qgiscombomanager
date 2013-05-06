@@ -37,7 +37,7 @@ class FieldCombo():
             fieldAlias = self.layer.attributeDisplayName(idx)
             try:
                 fieldName = field.name()
-            except: # qgis <1.9
+            except:  # qgis <1.9
                 fieldName = self.layer.pendingFields()[idx].name()
             self.widget.addItem(fieldAlias, fieldName)
             if not self.__isFieldValid(idx):
