@@ -1,5 +1,6 @@
-from PyQt4.QtCore import QVariant
+from PyQt4.QtCore import QVariant, Qt
 from qgis.core import QGis, QgsMapLayerRegistry, QgsMapLayer
+
 
 class LayerCombo():
     def __init__(self, legendInterface, widget, initLayer="", options={}, layerType=None):

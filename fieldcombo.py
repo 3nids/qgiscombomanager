@@ -1,4 +1,4 @@
-from PyQt4.QtCore import SIGNAL, QObject, QVariant
+from PyQt4.QtCore import SIGNAL, QObject, QVariant, Qt
 from qgis.core import QgsVectorLayer
 
 from layercombo import VectorLayerCombo
