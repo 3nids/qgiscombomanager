@@ -1,6 +1,8 @@
 from PyQt4.QtCore import QVariant, Qt
 from qgis.core import QGis, QgsMapLayerRegistry, QgsMapLayer
 
+availableOptions = ("groupLayers", "hasGeometry", "geomType", "dataProvider")
+
 
 class LayerCombo():
     def __init__(self, legendInterface, widget, initLayer="", options={}, layerType=None):
@@ -12,6 +14,9 @@ class LayerCombo():
             self.initLayer = initLayer
         self.layerType = layerType
         # get options
+        for option in options:
+            if option not in availableOptions:
+                raise NameError("invalid option %s" % option)
         self.groupLayers = options.get("groupLayers", False)
         self.hasGeometry = options.get("hasGeometry", None)
         self.geomType = options.get("geomType", None)
