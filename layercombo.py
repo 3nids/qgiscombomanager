@@ -1,7 +1,7 @@
 from PyQt4.QtCore import QVariant, Qt
 from qgis.core import QGis, QgsMapLayerRegistry, QgsMapLayer
 
-availableOptions = ("groupLayers", "hasGeometry", "geomType", "dataProvider")
+availableOptions = ("groupLayers", "hasGeometry", "geomType", "dataProvider", "finishInit")
 
 
 class LayerCombo():
