@@ -50,11 +50,13 @@ selected layer in the layer combo.</p>
 
 <p>In your plugin, create first a <em>LayerCombo</em>:</p>
 
-<p><code>self.LayerComboManager = VectorLayerCombo(iface.legendInterface(), self.layerComboWidget)</code></p>
+<div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">LayerComboManager</span> <span class="o">=</span> <span class="n">VectorLayerCombo</span><span class="p">(</span><span class="n">iface</span><span class="o">.</span><span class="n">legendInterface</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">layerComboWidget</span><span class="p">)</span>
+</pre></div>
 
 <p>Then, associates some <em>FieldCombo</em>:</p>
 
-<p><code>self.myFieldComboManager = FieldCombo(self.myFieldComboManager, self.LayerComboManager)</code></p>
+<div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">myFieldComboManager</span> <span class="o">=</span> <span class="n">FieldCombo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">myFieldComboManager</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LayerComboManager</span><span class="p">)</span>
+</pre></div>
 
 <p>The managers (layer or field) must be saved as a class property (self.something), so the variable is not
 getting out of scope in python.</p>
@@ -66,11 +68,13 @@ getting out of scope in python.</p>
 <p>To use this module you can easily copy the files and put them in your project.
 A more elegant way is to use git submodule. Hence, you can keep up with latest improvements. In you plugin directory, do</p>
 
-<p><code>git submodule add git://github.com/3nids/qgiscombomanager.git</code></p>
+<pre><code>git submodule add git://github.com/3nids/qgiscombomanager.git
+</code></pre>
 
 <p>Then, import the needed classes:</p>
 
-<p><code>from qgiscombomanager import LayerCombo, RasterLayerCombo, VectorLayerCombo, FieldCombo</code></p>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">qgiscombomanager</span> <span class="kn">import</span> <span class="n">LayerCombo</span><span class="p">,</span> <span class="n">RasterLayerCombo</span><span class="p">,</span> <span class="n">VectorLayerCombo</span><span class="p">,</span> <span class="n">FieldCombo</span>
+</pre></div>
 
 <h2>Layer Combos</h2>
 
@@ -80,36 +84,58 @@ A more elegant way is to use git submodule. Hence, you can keep up with latest i
 <li><em>LayerCombo</em></li>
 <li><em>VectorLayerCombo</em></li>
 <li><em>RasterLayerCombo</em></li>
-</ul><p><code>LayerCombo(legendInterface, widget, initLayer="", options={}, layerType=None)</code></p>
+</ul><div class="highlight"><pre><span class="n">LayerCombo</span><span class="p">(</span><span class="n">legendInterface</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">initLayer</span><span class="o">=</span><span class="s">""</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{},</span> <span class="n">layerType</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</pre></div>
 
-<p><em>VectorLayerCombo</em> and <em>RasterLayerCombo</em> are convenient classes which are calling the main LayerCombo class with the same parameters specifying the <em>layerType</em>.</p>
+<p><em>VectorLayerCombo</em> and <em>RasterLayerCombo</em> are convenient classes which are calling the main LayerCombo class with the same parameters and specifying the <em>layerType</em>.</p>
 
 <ul>
-<li>legendInterface: give the legendInterface (used to display layers in the same way as in the legend)</li>
-<li>widget: the QComboBox widget</li>
-<li>initLayer: the initally selected layer ID or a lambda function returning the ID (it could look for a value in settings)</li>
-<li>options: a dictionnary of options: {"opt1": val1, "opt2": val2, etc.}. Options are listed hereunder (default values are first listed).</li>
+<li>
+<strong>legendInterface</strong>: give the legendInterface (used to display layers in the same way as in the legend)</li>
+<li>
+<strong>widget</strong>: the QComboBox widget</li>
+<li>
+<strong>initLayer</strong>: the initally selected layer ID or a lambda function returning the ID (it could look for a value in settings)</li>
+<li>
+<strong>options</strong>: a dictionnary of options: {"opt1": val1, "opt2": val2, etc.}. Options are listed hereunder (default values are first listed).</li>
 </ul><p><strong>Options</strong></p>
 
 <ul>
-<li>groupLayers: False/True. Groups layers in combobox according to the legend interface groups</li>
-<li>hasGeometry(1): None/True/False. Restrains the possible selection of layers to layers having or not geometry (None = all).</li>
-<li>geomType(1): None/QGis.Point/QGis.Line/QGis.Polygon. Restrains the possible selection of layers to a certain <a href="http://qgis.org/api/classQGis.html#a09947eb19394302eeeed44d3e81dd74b">type of geometry</a>. (None = all)</li>
-<li>dataProvider: None/postgres/etc. Filters the layers based on the data provider name (None = all).</li>
-<li>finishInit: True/False. If False, the combo box will not be initiated (filled with layers). this might useful if you want the manager to be returned before it is filled with layers.</li>
-</ul><p>(1): used for vector layer combos</p>
+<li>
+<strong>groupLayers</strong>: False/True. Groups layers in combobox according to the legend interface groups</li>
+<li>
+<strong>hasGeometry</strong>*: None/True/False. Restrains the possible selection of layers to layers having or not geometry (None = all).</li>
+<li>
+<strong>geomType</strong>*: None/QGis.Point/QGis.Line/QGis.Polygon. Restrains the possible selection of layers to a certain <a href="http://qgis.org/api/classQGis.html#a09947eb19394302eeeed44d3e81dd74b">type of geometry</a>. (None = all)</li>
+<li>
+<strong>dataProvider</strong>: None/postgres/etc. Filters the layers based on the data provider name (None = all).</li>
+<li>
+<strong>finishInit</strong>: True/False. If False, the combo box will not be initiated (filled with layers). this might useful if you want the manager to be returned before it is filled with layers.</li>
+</ul><p>*used for vector layer combos</p>
 
 <h2>Field combos</h2>
 
 <p>A combo box can be assigned to list the fields related to a given VectorLayerCombo.</p>
 
-<p><code>FieldCombo(widget, vectorLayerCombo, initField="", fieldType=None)</code></p>
+<div class="highlight"><pre><span class="n">FieldCombo</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">vectorLayerCombo</span><span class="p">,</span> <span class="n">initField</span><span class="o">=</span><span class="s">""</span><span class="p">,</span> <span class="n">fieldType</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</pre></div>
 
 <ul>
 <li>widget: the qcombobox widget</li>
-<li>vectorLayerCombo: the parent combobox defining the used vector layer</li>
+<li>vectorLayerCombo: the combobox defining the vector layer</li>
 <li>initField: the initially selected field name or a lambda function returning the name (it could look for a value in settings)</li>
 <li>fieldType: restrain the possible selection to a certain type of field (see <a href="http://qgis.org/api/classQgsField.html#a00409d57dc65d6155c6d08085ea6c324">QGIS doc</a> or <a href="http://developer.qt.nokia.com/doc/qt-4.8/qmetatype.html#Type-enum">Qt doc</a>).</li>
+</ul><h2>Band combos</h2>
+
+<p>A combo box can be assigned to list the bands related to agin RasterLayerCombo.</p>
+
+<div class="highlight"><pre><span class="n">BandCombo</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">rasterLayerCombo</span><span class="p">,</span> <span class="n">initBand</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</pre></div>
+
+<ul>
+<li>widget: the qcombobox widget</li>
+<li>rasterLayerCombo: the combobox defining the raster layer</li>
+<li>initBand: the initially selected band (integer) or a lambda function returning it (it could look for a value in settings)</li>
 </ul>
       </section>
       <footer>
