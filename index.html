@@ -50,7 +50,9 @@ selected layer in the layer combo.</p>
 
 <p>In your plugin, create first a <em>LayerCombo</em>:</p>
 
-<div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">LayerComboManager</span> <span class="o">=</span> <span class="n">VectorLayerCombo</span><span class="p">(</span><span class="n">iface</span><span class="o">.</span><span class="n">legendInterface</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">layerComboWidget</span><span class="p">)</span>
+<div class="highlight"><pre><span class="kn">from</span> <span class="nn">qgiscombomanager</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="bp">self</span><span class="o">.</span><span class="n">LayerComboManager</span> <span class="o">=</span> <span class="n">VectorLayerCombo</span><span class="p">(</span><span class="n">iface</span><span class="o">.</span><span class="n">legendInterface</span><span class="p">(),</span> <span class="bp">self</span><span class="o">.</span><span class="n">layerComboWidget</span><span class="p">)</span>
 </pre></div>
 
 <p>Then, associates some <em>FieldCombo</em>:</p>
@@ -62,19 +64,6 @@ selected layer in the layer combo.</p>
 getting out of scope in python.</p>
 
 <p>The classes offers some convenience methods: <code>getLayer()</code> and <code>setLayer(layer)</code>, for layer combos, and <code>getFieldName()</code>, <code>getFieldAlias()</code>, <code>getFieldIndex()</code> for field combos.</p>
-
-<h2>Installing the module</h2>
-
-<p>To use this module you can easily copy the files and put them in your project.
-A more elegant way is to use git submodule. Hence, you can keep up with latest improvements. In you plugin directory, do</p>
-
-<pre><code>git submodule add git://github.com/3nids/qgiscombomanager.git
-</code></pre>
-
-<p>Then, import the needed classes:</p>
-
-<div class="highlight"><pre><span class="kn">from</span> <span class="nn">qgiscombomanager</span> <span class="kn">import</span> <span class="n">LayerCombo</span><span class="p">,</span> <span class="n">RasterLayerCombo</span><span class="p">,</span> <span class="n">VectorLayerCombo</span><span class="p">,</span> <span class="n">FieldCombo</span>
-</pre></div>
 
 <h2>Layer Combos</h2>
 
@@ -161,7 +150,15 @@ A more elegant way is to use git submodule. Hence, you can keep up with latest i
 <strong>rasterLayerCombo</strong>: the combobox defining the raster layer</li>
 <li>
 <strong>initBand</strong>: the initially selected band (integer) or a lambda function returning it (it could look for a value in settings)</li>
-</ul>
+</ul><h2>Using git submodules</h2>
+
+<p>To use this module you can easily copy the files and put them in your project.
+A more elegant way is to use <a href="http://git-scm.com/book/en/Git-Tools-Submodules">git submodule</a>. Hence, you can keep up with latest improvements. In you plugin directory, do</p>
+
+<pre><code>git submodule add git://github.com/3nids/qgiscombomanager.git
+</code></pre>
+
+<p>A folder <em>qgiscombomanager</em> will be added to your plugin directory. However, git only references the module, and you can <code>git pull</code> in this folder to get the last changes.</p>
       </section>
       <footer>
         <p>Project maintained by <a href="https://github.com/3nids">3nids</a></p>
