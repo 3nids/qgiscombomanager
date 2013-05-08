@@ -1,23 +1,24 @@
 from PyQt4.QtCore import QVariant, Qt
 from qgis.core import QGis, QgsMapLayerRegistry, QgsMapLayer
 
-availableOptions = ("groupLayers", "hasGeometry", "geomType", "dataProvider", "finishInit")
+availableOptions = ("groupLayers", "hasGeometry", "geomType", "dataProvider", "finishInit", "legendInterface")
 
 
 class LayerCombo():
-    def __init__(self, legendInterface, widget, initLayer="", options={}, layerType=None):
-        self.legendInterface = legendInterface
+    def __init__(self, widget, initLayer="", options={}, layerType=None):
         self.widget = widget
         if hasattr(initLayer, '__call__'):
             self.initLayer = initLayer()
         else:
             self.initLayer = initLayer
         self.layerType = layerType
+
         # get options
         for option in options:
             if option not in availableOptions:
                 raise NameError("invalid option %s" % option)
         self.groupLayers = options.get("groupLayers", False)
+        self.legendInterface = options.get("legendInterface", None)
         self.hasGeometry = options.get("hasGeometry", None)
         self.geomType = options.get("geomType", None)
         self.dataProvider = options.get("dataProvider", None)
@@ -25,6 +26,8 @@ class LayerCombo():
             raise NameError("Invalid value for option hasGeometry")
         if self.geomType not in (None, QGis.Point, QGis.Line, QGis.Polygon):
             raise NameError("Invalid value for option geomType")
+
+        # finish init (set to false if LayerCombo must be returned before items are completed)
         if options.get("finishInit", True):
             self.finishInit()
 
@@ -50,13 +53,15 @@ class LayerCombo():
         self.widget.clear()
         self.widget.addItem("")
         if not self.groupLayers:
-            for layer in self.legendInterface.layers():
+            for layerId, layer in QgsMapLayerRegistry.instance().mapLayers().iteritems():
                 if not self.__checkLayer(layer):
                     continue
-                self.widget.addItem(layer.name(), layer.id())
-                if layer.id() == self.initLayer:
+                self.widget.addItem(layer.name(), layerId)
+                if layerId == self.initLayer:
                     self.widget.setCurrentIndex(self.widget.count()-1)
         else:
+            if self.legendInterface is None:
+                raise NameError("Cannot display layers grouped if legendInterface is not given in the options.")
             for layerGroup in self.legendInterface.groupLayerRelationship():
                 groupName = layerGroup[0]
                 foundParent = False
@@ -117,10 +122,10 @@ class LayerCombo():
 
 
 class VectorLayerCombo(LayerCombo):
-    def __init__(self, iface, widget, initLayer="", options={}):
-        LayerCombo.__init__(self, iface, widget, initLayer, options, QgsMapLayer.VectorLayer)
+    def __init__(self, widget, initLayer="", options={}):
+        LayerCombo.__init__(self, widget, initLayer, options, QgsMapLayer.VectorLayer)
 
 
 class RasterLayerCombo(LayerCombo):
-    def __init__(self, iface, widget, initLayer="", options={}):
-        LayerCombo.__init__(self, iface, widget, initLayer, options, QgsMapLayer.RasterLayer)
+    def __init__(self, widget, initLayer="", options={}):
+        LayerCombo.__init__(self, widget, initLayer, options, QgsMapLayer.RasterLayer)
