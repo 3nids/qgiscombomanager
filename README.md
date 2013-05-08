@@ -32,9 +32,6 @@ The classes offers some convenience methods: `getLayer()` and `setLayer(layer)`,
 ## Layer Combos
 
 A combo box can be assigned to list the layers. Three classes are available:
-* _LayerCombo_
-* _VectorLayerCombo_
-* _RasterLayerCombo_
 
 ```python
 LayerCombo(widget, initLayer="", options={}, layerType=None)
@@ -84,7 +81,7 @@ This class offer convenient methods:
 
 ## Band combos
 
-Likely to field combos, a combo box can be assigned to list the bands related to a given RasterLayerCombo.
+Similarly to field combos, a combo box can be assigned to list the bands related to a given RasterLayerCombo.
 
 ```python
 BandCombo(widget, rasterLayerCombo, initBand=None)
