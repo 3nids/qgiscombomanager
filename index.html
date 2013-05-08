@@ -121,21 +121,28 @@ A more elegant way is to use git submodule. Hence, you can keep up with latest i
 </pre></div>
 
 <ul>
-<li>widget: the qcombobox widget</li>
-<li>vectorLayerCombo: the combobox defining the vector layer</li>
-<li>initField: the initially selected field name or a lambda function returning the name (it could look for a value in settings)</li>
-<li>fieldType: restrain the possible selection to a certain type of field (see <a href="http://qgis.org/api/classQgsField.html#a00409d57dc65d6155c6d08085ea6c324">QGIS doc</a> or <a href="http://developer.qt.nokia.com/doc/qt-4.8/qmetatype.html#Type-enum">Qt doc</a>).</li>
+<li>
+<strong>widget</strong>: the qcombobox widget</li>
+<li>
+<strong>vectorLayerCombo</strong>: the combobox defining the vector layer</li>
+<li>
+<strong>initField</strong>: the initially selected field name or a lambda function returning the name (it could look for a value in settings)</li>
+<li>
+<strong>fieldType</strong>: restrain the possible selection to a certain type of field (see <a href="http://qgis.org/api/classQgsField.html#a00409d57dc65d6155c6d08085ea6c324">QGIS doc</a> or <a href="http://developer.qt.nokia.com/doc/qt-4.8/qmetatype.html#Type-enum">Qt doc</a>).</li>
 </ul><h2>Band combos</h2>
 
-<p>A combo box can be assigned to list the bands related to agin RasterLayerCombo.</p>
+<p>Likely to field combos, a combo box can be assigned to list the bands related to a given RasterLayerCombo.</p>
 
 <div class="highlight"><pre><span class="n">BandCombo</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">rasterLayerCombo</span><span class="p">,</span> <span class="n">initBand</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
 </pre></div>
 
 <ul>
-<li>widget: the qcombobox widget</li>
-<li>rasterLayerCombo: the combobox defining the raster layer</li>
-<li>initBand: the initially selected band (integer) or a lambda function returning it (it could look for a value in settings)</li>
+<li>
+<strong>widget</strong>: the qcombobox widget</li>
+<li>
+<strong>rasterLayerCombo</strong>: the combobox defining the raster layer</li>
+<li>
+<strong>initBand</strong>: the initially selected band (integer) or a lambda function returning it (it could look for a value in settings)</li>
 </ul>
       </section>
       <footer>
