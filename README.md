@@ -84,7 +84,7 @@ FieldCombo(widget, vectorLayerCombo, initField="", fieldType=None)
 
 ## Band combos
 
-A combo box can be assigned to list the bands related to agin RasterLayerCombo.
+Likely to field combos, a combo box can be assigned to list the bands related to a given RasterLayerCombo.
 
 ```python
 BandCombo(widget, rasterLayerCombo, initBand=None)
