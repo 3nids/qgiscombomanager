@@ -10,6 +10,8 @@ selected layer in the layer combo.
 In your plugin, create first a _LayerCombo_:
 
 ```python
+from qgiscombomanager import *
+
 self.LayerComboManager = VectorLayerCombo(iface.legendInterface(), self.layerComboWidget)
 ```
 
@@ -26,20 +28,6 @@ getting out of scope in python.
 
 The classes offers some convenience methods: `getLayer()` and `setLayer(layer)`, for layer combos, and `getFieldName()`, `getFieldAlias()`, `getFieldIndex()` for field combos.
 
-## Installing the module
-
-To use this module you can easily copy the files and put them in your project.
-A more elegant way is to use git submodule. Hence, you can keep up with latest improvements. In you plugin directory, do
-
-```
-git submodule add git://github.com/3nids/qgiscombomanager.git
-```
-
-Then, import the needed classes:
-
-```python
-from qgiscombomanager import LayerCombo, RasterLayerCombo, VectorLayerCombo, FieldCombo
-```
 
 ## Layer Combos
 
@@ -58,14 +46,14 @@ RasterLayerCombo(widget, initLayer="", options={})
 
 * **widget**: the QComboBox widget
 * **initLayer**: the initally selected layer ID or a lambda function returning the ID (it could look for a value in settings).
-* **options**: a dictionnary of options: {"opt1": val1, "opt2": val2, etc.}. Options are listed hereunder (default values are first listed).
+* **options**: a dictionnary of options: {"opt1": val1, "opt2": val2, etc.}.
 
-**Options**
+**Options** are listed hereunder, default values being listed first:
 * **hasGeometry***: None/True/False. Restrains the possible selection of layers to layers having or not geometry (None = all).
-* **geomType***: None/QGis.Point/QGis.Line/QGis.Polygon. Restrains the possible selection of layers to a certain [type of geometry](http://qgis.org/api/classQGis.html#a09947eb19394302eeeed44d3e81dd74b). (None = all)
+* **geomType***: None/QGis.Point/QGis.Line/QGis.Polygon. Restrains the possible selection of layers to a certain [type of geometry](http://qgis.org/api/classQGis.html#a09947eb19394302eeeed44d3e81dd74b) (None = all).
 * **dataProvider**: None/postgres/etc. Filters the layers based on the data provider name (None = all).
-* **groupLayers**: False/True. Groups layers in combobox according to the legend interface groups
-* **legendInterface**: legendInterface (`iface.legendInterface()`). It is only needed if `groupLayers` is set to `True`.
+* **groupLayers**: False/True. Groups layers in combobox according to the legend interface groups.
+* **legendInterface**: if `groupLayers is True`, you must provide `iface.legendInterface()` for this option.
 * **finishInit**: True/False. Set it to  `False` if the `LayerCombo` object must be returned before its items are filled with layers.
 
 *used for vector layer combos
@@ -105,3 +93,16 @@ BandCombo(widget, rasterLayerCombo, initBand=None)
 * **widget**: the qcombobox widget
 * **rasterLayerCombo**: the combobox defining the raster layer
 * **initBand**: the initially selected band (integer) or a lambda function returning it (it could look for a value in settings)
+
+
+
+## Using git submodules
+
+To use this module you can easily copy the files and put them in your project.
+A more elegant way is to use [git submodule](http://git-scm.com/book/en/Git-Tools-Submodules). Hence, you can keep up with latest improvements. In you plugin directory, do
+
+```
+git submodule add git://github.com/3nids/qgiscombomanager.git
+```
+
+A folder _qgiscombomanager_ will be added to your plugin directory. However, git only references the module, and you can `git pull` in this folder to get the last changes.
