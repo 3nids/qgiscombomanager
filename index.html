@@ -69,11 +69,7 @@ getting out of scope in python.</p>
 
 <p>A combo box can be assigned to list the layers. Three classes are available:</p>
 
-<ul>
-<li><em>LayerCombo</em></li>
-<li><em>VectorLayerCombo</em></li>
-<li><em>RasterLayerCombo</em></li>
-</ul><div class="highlight"><pre><span class="n">LayerCombo</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">initLayer</span><span class="o">=</span><span class="s">""</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{},</span> <span class="n">layerType</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<div class="highlight"><pre><span class="n">LayerCombo</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">initLayer</span><span class="o">=</span><span class="s">""</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{},</span> <span class="n">layerType</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
 <span class="n">VectorLayerCombo</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">initLayer</span><span class="o">=</span><span class="s">""</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{})</span>
 <span class="n">RasterLayerCombo</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">initLayer</span><span class="o">=</span><span class="s">""</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{})</span>
 </pre></div>
@@ -99,7 +95,7 @@ getting out of scope in python.</p>
 <li>
 <strong>groupLayers</strong>: False/True. Groups layers in combobox according to the legend interface groups.</li>
 <li>
-<strong>legendInterface</strong>: if <code>groupLayers is True</code>, you must provide <code>iface.legendInterface()</code> for this options.</li>
+<strong>legendInterface</strong>: if <code>groupLayers is True</code>, you must provide <code>iface.legendInterface()</code> for this option.</li>
 <li>
 <strong>finishInit</strong>: True/False. Set it to  <code>False</code> if the <code>LayerCombo</code> object must be returned before its items are filled with layers.</li>
 </ul><p>*used for vector layer combos</p>
@@ -138,7 +134,7 @@ getting out of scope in python.</p>
 <code>getFieldIndex()</code>: returns the field index of the currently selected field</li>
 </ul><h2>Band combos</h2>
 
-<p>Likely to field combos, a combo box can be assigned to list the bands related to a given RasterLayerCombo.</p>
+<p>Similarly to field combos, a combo box can be assigned to list the bands related to a given RasterLayerCombo.</p>
 
 <div class="highlight"><pre><span class="n">BandCombo</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">rasterLayerCombo</span><span class="p">,</span> <span class="n">initBand</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
 </pre></div>
