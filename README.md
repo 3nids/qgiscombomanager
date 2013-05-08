@@ -24,7 +24,7 @@ self.myFieldComboManager = FieldCombo(self.myFieldComboManager, self.LayerComboM
 The managers (layer or field) must be saved as a class property (self.something), so the variable is not
 getting out of scope in python.
 
-The classes offers some convenience methods: _getLayer()_, for layer combos, and _getFieldName()_, _getFieldAlias()_, _getFieldIndex()_ for field combos.
+The classes offers some convenience methods: `getLayer()` and `setLayer(layer)`, for layer combos, and `getFieldName()`, `getFieldAlias()`, `getFieldIndex()` for field combos.
 
 ## Installing the module
 
@@ -49,24 +49,31 @@ A combo box can be assigned to list the layers. Three classes are available:
 * _RasterLayerCombo_
 
 ```python
-LayerCombo(legendInterface, widget, initLayer="", options={}, layerType=None)
+LayerCombo(widget, initLayer="", options={}, layerType=None)
+VectorLayerCombo(widget, initLayer="", options={})
+RasterLayerCombo(widget, initLayer="", options={})
 ```
 
-_VectorLayerCombo_ and _RasterLayerCombo_ are convenient classes which are calling the main LayerCombo class with the same parameters and specifying the _layerType_.
+`VectorLayerCombo` and `RasterLayerCombo` are convenient classes which are calling the main LayerCombo class with the same parameters and specifying the `layerType`.
 
-* **legendInterface**: give the legendInterface (used to display layers in the same way as in the legend)
 * **widget**: the QComboBox widget
-* **initLayer**: the initally selected layer ID or a lambda function returning the ID (it could look for a value in settings)
+* **initLayer**: the initally selected layer ID or a lambda function returning the ID (it could look for a value in settings).
 * **options**: a dictionnary of options: {"opt1": val1, "opt2": val2, etc.}. Options are listed hereunder (default values are first listed).
 
 **Options**
-* **groupLayers**: False/True. Groups layers in combobox according to the legend interface groups
 * **hasGeometry***: None/True/False. Restrains the possible selection of layers to layers having or not geometry (None = all).
 * **geomType***: None/QGis.Point/QGis.Line/QGis.Polygon. Restrains the possible selection of layers to a certain [type of geometry](http://qgis.org/api/classQGis.html#a09947eb19394302eeeed44d3e81dd74b). (None = all)
 * **dataProvider**: None/postgres/etc. Filters the layers based on the data provider name (None = all).
-* **finishInit**: True/False. If False, the combo box will not be initiated (filled with layers). this might useful if you want the manager to be returned before it is filled with layers.
+* **groupLayers**: False/True. Groups layers in combobox according to the legend interface groups
+* **legendInterface**: legendInterface (`iface.legendInterface()`). It is only needed if `groupLayers` is set to `True`.
+* **finishInit**: True/False. Set it to  `False` if the `LayerCombo` object must be returned before its items are filled with layers.
 
 *used for vector layer combos
+
+These classes offer convenient methods:
+
+* `getLayer()`: returns the layer currently selected in the combo box
+* `setLayer(layer)`: set the given layer as currently selected in the combo box
 
 
 ## Field combos
@@ -81,6 +88,11 @@ FieldCombo(widget, vectorLayerCombo, initField="", fieldType=None)
 * **vectorLayerCombo**: the combobox defining the vector layer
 * **initField**: the initially selected field name or a lambda function returning the name (it could look for a value in settings)
 * **fieldType**: restrain the possible selection to a certain type of field (see [QGIS doc](http://qgis.org/api/classQgsField.html#a00409d57dc65d6155c6d08085ea6c324) or [Qt doc](http://developer.qt.nokia.com/doc/qt-4.8/qmetatype.html#Type-enum)).
+
+This class offer convenient methods:
+* `getFieldName()`: returns the name of the currently selected field
+* `getFieldAlias()`: returns the alias of the currently selected field
+* `getFieldIndex()`: returns the field index of the currently selected field
 
 ## Band combos
 
