@@ -61,7 +61,7 @@ selected layer in the layer combo.</p>
 <p>The managers (layer or field) must be saved as a class property (self.something), so the variable is not
 getting out of scope in python.</p>
 
-<p>The classes offers some convenience methods: <em>getLayer()</em>, for layer combos, and <em>getFieldName()</em>, <em>getFieldAlias()</em>, <em>getFieldIndex()</em> for field combos.</p>
+<p>The classes offers some convenience methods: <code>getLayer()</code> and <code>setLayer(layer)</code>, for layer combos, and <code>getFieldName()</code>, <code>getFieldAlias()</code>, <code>getFieldIndex()</code> for field combos.</p>
 
 <h2>Installing the module</h2>
 
@@ -84,25 +84,23 @@ A more elegant way is to use git submodule. Hence, you can keep up with latest i
 <li><em>LayerCombo</em></li>
 <li><em>VectorLayerCombo</em></li>
 <li><em>RasterLayerCombo</em></li>
-</ul><div class="highlight"><pre><span class="n">LayerCombo</span><span class="p">(</span><span class="n">legendInterface</span><span class="p">,</span> <span class="n">widget</span><span class="p">,</span> <span class="n">initLayer</span><span class="o">=</span><span class="s">""</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{},</span> <span class="n">layerType</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+</ul><div class="highlight"><pre><span class="n">LayerCombo</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">initLayer</span><span class="o">=</span><span class="s">""</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{},</span> <span class="n">layerType</span><span class="o">=</span><span class="bp">None</span><span class="p">)</span>
+<span class="n">VectorLayerCombo</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">initLayer</span><span class="o">=</span><span class="s">""</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{})</span>
+<span class="n">RasterLayerCombo</span><span class="p">(</span><span class="n">widget</span><span class="p">,</span> <span class="n">initLayer</span><span class="o">=</span><span class="s">""</span><span class="p">,</span> <span class="n">options</span><span class="o">=</span><span class="p">{})</span>
 </pre></div>
 
-<p><em>VectorLayerCombo</em> and <em>RasterLayerCombo</em> are convenient classes which are calling the main LayerCombo class with the same parameters and specifying the <em>layerType</em>.</p>
+<p><code>VectorLayerCombo</code> and <code>RasterLayerCombo</code> are convenient classes which are calling the main LayerCombo class with the same parameters and specifying the <code>layerType</code>.</p>
 
 <ul>
 <li>
-<strong>legendInterface</strong>: give the legendInterface (used to display layers in the same way as in the legend)</li>
-<li>
 <strong>widget</strong>: the QComboBox widget</li>
 <li>
-<strong>initLayer</strong>: the initally selected layer ID or a lambda function returning the ID (it could look for a value in settings)</li>
+<strong>initLayer</strong>: the initally selected layer ID or a lambda function returning the ID (it could look for a value in settings).</li>
 <li>
 <strong>options</strong>: a dictionnary of options: {"opt1": val1, "opt2": val2, etc.}. Options are listed hereunder (default values are first listed).</li>
 </ul><p><strong>Options</strong></p>
 
 <ul>
-<li>
-<strong>groupLayers</strong>: False/True. Groups layers in combobox according to the legend interface groups</li>
 <li>
 <strong>hasGeometry</strong>*: None/True/False. Restrains the possible selection of layers to layers having or not geometry (None = all).</li>
 <li>
@@ -110,10 +108,21 @@ A more elegant way is to use git submodule. Hence, you can keep up with latest i
 <li>
 <strong>dataProvider</strong>: None/postgres/etc. Filters the layers based on the data provider name (None = all).</li>
 <li>
-<strong>finishInit</strong>: True/False. If False, the combo box will not be initiated (filled with layers). this might useful if you want the manager to be returned before it is filled with layers.</li>
+<strong>groupLayers</strong>: False/True. Groups layers in combobox according to the legend interface groups</li>
+<li>
+<strong>legendInterface</strong>: legendInterface (<code>iface.legendInterface()</code>). It is only needed if <code>groupLayers</code> is set to <code>True</code>.</li>
+<li>
+<strong>finishInit</strong>: True/False. Set it to  <code>False</code> if the <code>LayerCombo</code> object must be returned before its items are filled with layers.</li>
 </ul><p>*used for vector layer combos</p>
 
-<h2>Field combos</h2>
+<p>These classes offer convenient methods:</p>
+
+<ul>
+<li>
+<code>getLayer()</code>: returns the layer currently selected in the combo box</li>
+<li>
+<code>setLayer(layer)</code>: set the given layer as currently selected in the combo box</li>
+</ul><h2>Field combos</h2>
 
 <p>A combo box can be assigned to list the fields related to a given VectorLayerCombo.</p>
 
@@ -129,6 +138,15 @@ A more elegant way is to use git submodule. Hence, you can keep up with latest i
 <strong>initField</strong>: the initially selected field name or a lambda function returning the name (it could look for a value in settings)</li>
 <li>
 <strong>fieldType</strong>: restrain the possible selection to a certain type of field (see <a href="http://qgis.org/api/classQgsField.html#a00409d57dc65d6155c6d08085ea6c324">QGIS doc</a> or <a href="http://developer.qt.nokia.com/doc/qt-4.8/qmetatype.html#Type-enum">Qt doc</a>).</li>
+</ul><p>This class offer convenient methods:</p>
+
+<ul>
+<li>
+<code>getFieldName()</code>: returns the name of the currently selected field</li>
+<li>
+<code>getFieldAlias()</code>: returns the alias of the currently selected field</li>
+<li>
+<code>getFieldIndex()</code>: returns the field index of the currently selected field</li>
 </ul><h2>Band combos</h2>
 
 <p>Likely to field combos, a combo box can be assigned to list the bands related to a given RasterLayerCombo.</p>
