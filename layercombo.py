@@ -46,7 +46,10 @@ class LayerCombo():
         return QgsMapLayerRegistry.instance().mapLayer(layerId)
 
     def setLayer(self, layer):
-        idx = self.widget.findData(layer.id(), Qt.UserRole)
+        if layer is None:
+            idx = -1
+        else:
+            idx = self.widget.findData(layer.id(), Qt.UserRole)
         self.widget.setCurrentIndex(idx)
 
     def canvasLayersChanged(self, layerList=[]):
