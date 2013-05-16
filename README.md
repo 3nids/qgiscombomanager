@@ -12,7 +12,7 @@ In your plugin, create first a _LayerCombo_:
 ```python
 from qgiscombomanager import *
 
-self.LayerComboManager = VectorLayerCombo(iface.legendInterface(), self.layerComboWidget)
+self.LayerComboManager = VectorLayerCombo(self.layerComboWidget)
 ```
 
 
