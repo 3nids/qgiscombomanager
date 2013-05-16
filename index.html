@@ -52,12 +52,12 @@ selected layer in the layer combo.</p>
 
 <div class="highlight"><pre><span class="kn">from</span> <span class="nn">qgiscombomanager</span> <span class="kn">import</span> <span class="o">*</span>
 
-<span class="bp">self</span><span class="o">.</span><span class="n">LayerComboManager</span> <span class="o">=</span> <span class="n">VectorLayerCombo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layerComboWidget</span><span class="p">)</span>
+<span class="bp">self</span><span class="o">.</span><span class="n">layerComboManager</span> <span class="o">=</span> <span class="n">VectorLayerCombo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">layerComboWidget</span><span class="p">)</span>
 </pre></div>
 
 <p>Then, associates some <em>FieldCombo</em>:</p>
 
-<div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">myFieldComboManager</span> <span class="o">=</span> <span class="n">FieldCombo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">myFieldComboManager</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">LayerComboManager</span><span class="p">)</span>
+<div class="highlight"><pre><span class="bp">self</span><span class="o">.</span><span class="n">myFieldComboManager</span> <span class="o">=</span> <span class="n">FieldCombo</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">myFieldComboManager</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">layerComboManager</span><span class="p">)</span>
 </pre></div>
 
 <p>The managers (layer or field) must be saved as a class property (self.something), so the variable is not
