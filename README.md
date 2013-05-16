@@ -12,14 +12,14 @@ In your plugin, create first a _LayerCombo_:
 ```python
 from qgiscombomanager import *
 
-self.LayerComboManager = VectorLayerCombo(self.layerComboWidget)
+self.layerComboManager = VectorLayerCombo(self.layerComboWidget)
 ```
 
 
 Then, associates some _FieldCombo_:
 
 ```python
-self.myFieldComboManager = FieldCombo(self.myFieldComboManager, self.LayerComboManager)
+self.myFieldComboManager = FieldCombo(self.myFieldComboManager, self.layerComboManager)
 ```
 
 
