@@ -99,6 +99,9 @@ class LayerCombo():
         return True
 
     def __checkLayer(self, layer):
+        # skip layer
+        if layer.id() in self.options["skipLayers"]:
+            return False
         # data provider
         if self.options["dataProvider"] is not None and layer.dataProvider().name() != self.options["dataProvider"]:
             return False
