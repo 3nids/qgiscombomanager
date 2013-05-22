@@ -1,41 +1,36 @@
 from PyQt4.QtCore import QVariant, Qt
 from qgis.core import QGis, QgsMapLayerRegistry, QgsMapLayer
 
-availableOptions = ("groupLayers", "hasGeometry", "geomType", "dataProvider", "finishInit", "legendInterface")
+from optiondictionary import OptionDictionary
+
+AvailableOptions = {"groupLayers": (False, True),
+                    "hasGeometry": (None, False, True),
+                    "geomType": (None, QGis.Point, QGis.Line, QGis.Polygon),
+                    "dataProvider": None,
+                    "finishInit": (True, False),
+                    "legendInterface": None,
+                    "skipLayers": list}
 
 
 class LayerCombo():
     def __init__(self, widget, initLayer="", options={}, layerType=None):
         self.widget = widget
+        self.options = OptionDictionary(AvailableOptions, options)
         if hasattr(initLayer, '__call__'):
             self.initLayer = initLayer()
         else:
             self.initLayer = initLayer
         self.layerType = layerType
 
-        # get options
-        for option in options:
-            if option not in availableOptions:
-                raise NameError("invalid option %s" % option)
-        self.groupLayers = options.get("groupLayers", False)
-        self.legendInterface = options.get("legendInterface", None)
-        self.hasGeometry = options.get("hasGeometry", None)
-        self.geomType = options.get("geomType", None)
-        self.dataProvider = options.get("dataProvider", None)
-        if self.hasGeometry not in (None, True, False):
-            raise NameError("Invalid value for option hasGeometry")
-        if self.geomType not in (None, QGis.Point, QGis.Line, QGis.Polygon):
-            raise NameError("Invalid value for option geomType")
-
         # finish init (set to false if LayerCombo must be returned before items are completed)
-        if options.get("finishInit", True):
+        if self.options["finishInit"]:
             self.finishInit()
 
     def finishInit(self):
         # connect signal for layers and populate combobox
         QgsMapLayerRegistry.instance().layersAdded.connect(self.canvasLayersChanged)
-        if self.groupLayers:
-            self.legendInterface.groupRelationsChanged.connect(self.canvasLayersChanged)
+        if self.options["groupLayers"]:
+            self.options["legendInterface"].groupRelationsChanged.connect(self.canvasLayersChanged)
         self.canvasLayersChanged()
 
     def getLayer(self):
@@ -55,7 +50,7 @@ class LayerCombo():
     def canvasLayersChanged(self, layerList=[]):
         self.widget.clear()
         self.widget.addItem("")
-        if not self.groupLayers:
+        if not self.options["groupLayers"]:
             for layerId, layer in QgsMapLayerRegistry.instance().mapLayers().iteritems():
                 if not self.__checkLayer(layer):
                     continue
@@ -63,9 +58,9 @@ class LayerCombo():
                 if layerId == self.initLayer:
                     self.widget.setCurrentIndex(self.widget.count()-1)
         else:
-            if self.legendInterface is None:
+            if self.options["legendInterface"] is None:
                 raise NameError("Cannot display layers grouped if legendInterface is not given in the options.")
-            for layerGroup in self.legendInterface.groupLayerRelationship():
+            for layerGroup in self.options["legendInterface"].groupLayerRelationship():
                 groupName = layerGroup[0]
                 foundParent = False
                 insertPosition = self.widget.count()
@@ -105,17 +100,17 @@ class LayerCombo():
 
     def __checkLayer(self, layer):
         # data provider
-        if self.dataProvider is not None and layer.dataProvider().name() != self.dataProvider:
+        if self.options["dataProvider"] is not None and layer.dataProvider().name() != self.options["dataProvider"]:
             return False
         # vector layer
         if self.layerType == QgsMapLayer.VectorLayer:
             if layer.type() != QgsMapLayer.VectorLayer:
                 return False
             # if wanted, filter on hasGeometry
-            if self.hasGeometry is not None and layer.hasGeometryType() != self.hasGeometry:
+            if self.options["hasGeometry"] is not None and layer.hasGeometryType() != self.options["hasGeometry"]:
                 return False
             # if wanted, filter on the geoetry type
-            if self.geomType is not None and layer.geometryType() != self.geomType:
+            if self.options["geomType"] is not None and layer.geometryType() != self.options["geomType"]:
                 return False
         # raster layer
         if self.layerType == QgsMapLayer.RasterLayer:
