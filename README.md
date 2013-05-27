@@ -52,7 +52,7 @@ RasterLayerCombo(widget, initLayer="", options={})
 * **groupLayers**: False/True. Groups layers in combobox according to the legend interface groups.
 * **legendInterface**: if `groupLayers is True`, you must provide `iface.legendInterface()` for this option.
 * **finishInit**: True/False. Set it to  `False` if the `LayerCombo` object must be returned before its items are filled with layers.
-* **skipLayers**: a list of layer IDs not to be shown in the combo box.
+* **skipLayers**: a list of layer IDs or lambda functions returning layer IDs which will not to be shown in the combo box.
 
 *used for vector layer combos
 
