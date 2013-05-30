@@ -57,10 +57,10 @@ class LayerCombo():
 
     def finishInit(self):
         # connect signal for layers and populate combobox
-        QgsMapLayerRegistry.instance().layersAdded.connect(self.canvasLayersChanged)
+        QgsMapLayerRegistry.instance().layersAdded.connect(self.__canvasLayersChanged)
         if self.options["groupLayers"]:
-            self.options["legendInterface"].groupRelationsChanged.connect(self.canvasLayersChanged)
-        self.canvasLayersChanged()
+            self.options["legendInterface"].groupRelationsChanged.connect(self.__canvasLayersChanged)
+        self.__canvasLayersChanged()
 
     def getLayer(self):
         i = self.widget.currentIndex()
@@ -76,7 +76,7 @@ class LayerCombo():
             idx = self.widget.findData(layer.id(), Qt.UserRole)
         self.widget.setCurrentIndex(idx)
 
-    def canvasLayersChanged(self, layerList=[]):
+    def __canvasLayersChanged(self, layerList=[]):
         self.widget.clear()
         self.widget.addItem("")
         if not self.options["groupLayers"]:
@@ -104,14 +104,14 @@ class LayerCombo():
                         indent = lineData[1].toInt()[0] + 1
                         break
                 if not foundParent and groupName != "":
-                    self.addLayerToCombo(groupName, insertPosition)
+                    self.__addLayerToCombo(groupName, insertPosition)
                     insertPosition += 1
                     indent += 1
                 for layerid in layerGroup[1]:
-                    if self.addLayerToCombo(layerid, insertPosition, indent):
+                    if self.__addLayerToCombo(layerid, insertPosition, indent):
                         insertPosition += 1
 
-    def addLayerToCombo(self, layerid, position, indent=0):
+    def __addLayerToCombo(self, layerid, position, indent=0):
         layer = QgsMapLayerRegistry.instance().mapLayer(layerid)
         preStr = "  "*2*indent
         if layer is None:  # this is a group
