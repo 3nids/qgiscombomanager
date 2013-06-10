@@ -28,7 +28,7 @@
 #---------------------------------------------------------------------
 
 
-from PyQt4.QtCore import SIGNAL, QObject, QVariant, Qt
+from PyQt4.QtCore import SIGNAL, QObject, Qt
 from qgis.core import QgsVectorLayer
 
 from layercombo import VectorLayerCombo
@@ -72,7 +72,7 @@ class FieldCombo():
             self.widget.addItem(fieldAlias, fieldName)
             if not self.__isFieldValid(idx):
                 j = self.widget.model().index(i, 0)
-                self.widget.model().setData(j, QVariant(0), Qt.UserRole-1)
+                self.widget.model().setData(j, 0, Qt.UserRole-1)
                 continue
             if fieldName == initField:
                 self.widget.setCurrentIndex(i)
@@ -98,7 +98,7 @@ class FieldCombo():
         i = self.widget.currentIndex()
         if i == 0:
             return ""
-        return self.widget.itemData(i).toString()
+        return self.widget.itemData(i)
 
     def getFieldIndex(self):
         i = self.widget.currentIndex()

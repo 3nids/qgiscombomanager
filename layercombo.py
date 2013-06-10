@@ -27,7 +27,7 @@
 #
 #---------------------------------------------------------------------
 
-from PyQt4.QtCore import QVariant, Qt
+from PyQt4.QtCore import Qt
 from qgis.core import QGis, QgsMapLayerRegistry, QgsMapLayer
 
 from optiondictionary import OptionDictionary
@@ -66,7 +66,7 @@ class LayerCombo():
         i = self.widget.currentIndex()
         if i == 0:
             return None
-        layerId = self.widget.itemData(i).toString()
+        layerId = self.widget.itemData(i)
         return QgsMapLayerRegistry.instance().mapLayer(layerId)
 
     def setLayer(self, layer):
@@ -95,13 +95,13 @@ class LayerCombo():
                 insertPosition = self.widget.count()
                 indent = 0
                 for i in range(self.widget.count()):
-                    lineData = self.widget.itemData(i).toList()
+                    lineData = self.widget.itemData(i)
                     if len(lineData) > 0 and lineData[0] == groupName:
                         foundParent = True
                         insertPosition = i+1
                         lineData[0] = "groupTaken"
                         self.widget.setItemData(i, lineData)
-                        indent = lineData[1].toInt()[0] + 1
+                        indent = lineData[1] + 1
                         break
                 if not foundParent and groupName != "":
                     self.__addLayerToCombo(groupName, insertPosition)
@@ -118,7 +118,7 @@ class LayerCombo():
             # save in userdata a list ["group",indent]
             self.widget.insertItem(position, preStr+layerid, [layerid, indent])
             j = self.widget.model().index(position, 0)
-            self.widget.model().setData(j, QVariant(0), Qt.UserRole - 1)
+            self.widget.model().setData(j, 0, Qt.UserRole - 1)
         else:
             if not self.__checkLayer(layer):
                 return False
