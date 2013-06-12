@@ -65,10 +65,7 @@ class FieldCombo():
         for idx, field in enumerate(self.layer.pendingFields()):
             i += 1
             fieldAlias = self.layer.attributeDisplayName(idx)
-            try:
-                fieldName = field.name()
-            except:  # qgis <1.9
-                fieldName = self.layer.pendingFields()[idx].name()
+            fieldName = field.name()
             self.widget.addItem(fieldAlias, fieldName)
             if not self.__isFieldValid(idx):
                 j = self.widget.model().index(i, 0)
