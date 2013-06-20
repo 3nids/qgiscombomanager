@@ -95,7 +95,7 @@ class LayerCombo():
                 insertPosition = self.widget.count()
                 indent = 0
                 for i in range(self.widget.count()):
-                    lineData = self.widget.itemData(i)
+                    lineData = self.widget.itemData(i) or []
                     if len(lineData) > 0 and lineData[0] == groupName:
                         foundParent = True
                         insertPosition = i+1
