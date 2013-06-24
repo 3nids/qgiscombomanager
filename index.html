@@ -39,7 +39,8 @@
         <ul></ul>
       </nav>
       <section>
-        <h2>Quick start</h2>
+        <h2>
+<a name="quick-start" class="anchor" href="#quick-start"><span class="octicon octicon-link"></span></a>Quick start</h2>
 
 <p><a href="http://www.qgis.org">QGIS</a> Combo Manager is a python module to easily manage a combo box with
 a layer list and eventually relate it with one or several combos with
@@ -65,7 +66,8 @@ getting out of scope in python.</p>
 
 <p>The classes offers some convenience methods: <code>getLayer()</code> and <code>setLayer(layer)</code>, for layer combos, and <code>getFieldName()</code>, <code>getFieldAlias()</code>, <code>getFieldIndex()</code> for field combos.</p>
 
-<h2>Layer Combos</h2>
+<h2>
+<a name="layer-combos" class="anchor" href="#layer-combos"><span class="octicon octicon-link"></span></a>Layer Combos</h2>
 
 <p>A combo box can be assigned to list the layers. Three classes are available:</p>
 
@@ -100,6 +102,8 @@ getting out of scope in python.</p>
 <strong>finishInit</strong>: True/False. Set it to  <code>False</code> if the <code>LayerCombo</code> object must be returned before its items are filled with layers.</li>
 <li>
 <strong>skipLayers</strong>: a list of layer IDs or lambda functions returning layer IDs which will not to be shown in the combo box.</li>
+<li>
+<strong>emptyItemFirst</strong>: True/False. If true, a first empty item is listed first in the combo box.</li>
 </ul><p>*used for vector layer combos</p>
 
 <p>These classes offer convenient methods:</p>
@@ -109,7 +113,8 @@ getting out of scope in python.</p>
 <code>getLayer()</code>: returns the layer currently selected in the combo box</li>
 <li>
 <code>setLayer(layer)</code>: set the given layer as currently selected in the combo box</li>
-</ul><h2>Field combos</h2>
+</ul><h2>
+<a name="field-combos" class="anchor" href="#field-combos"><span class="octicon octicon-link"></span></a>Field combos</h2>
 
 <p>A combo box can be assigned to list the fields related to a given VectorLayerCombo.</p>
 
@@ -124,6 +129,13 @@ getting out of scope in python.</p>
 <li>
 <strong>initField</strong>: the initially selected field name or a lambda function returning the name (it could look for a value in settings)</li>
 <li>
+<strong>options</strong>: a dictionnary of options: {"opt1": val1, "opt2": val2, etc.}.</li>
+</ul><p><strong>Options</strong> are listed hereunder, default values being listed first:</p>
+
+<ul>
+<li>
+<strong>emptyItemFirst</strong>: True/False. If true, a first empty item is listed first in the combo box.</li>
+<li>
 <strong>fieldType</strong>: restrain the possible selection to a certain type of field (see <a href="http://qgis.org/api/classQgsField.html#a00409d57dc65d6155c6d08085ea6c324">QGIS doc</a> or <a href="http://developer.qt.nokia.com/doc/qt-4.8/qmetatype.html#Type-enum">Qt doc</a>).</li>
 </ul><p>This class offer convenient methods:</p>
 
@@ -134,7 +146,8 @@ getting out of scope in python.</p>
 <code>getFieldAlias()</code>: returns the alias of the currently selected field</li>
 <li>
 <code>getFieldIndex()</code>: returns the field index of the currently selected field</li>
-</ul><h2>Band combos</h2>
+</ul><h2>
+<a name="band-combos" class="anchor" href="#band-combos"><span class="octicon octicon-link"></span></a>Band combos</h2>
 
 <p>Similarly to field combos, a combo box can be assigned to list the bands related to a given RasterLayerCombo.</p>
 
@@ -148,7 +161,8 @@ getting out of scope in python.</p>
 <strong>rasterLayerCombo</strong>: the combobox defining the raster layer</li>
 <li>
 <strong>initBand</strong>: the initially selected band (integer) or a lambda function returning it (it could look for a value in settings)</li>
-</ul><h2>Using git submodules</h2>
+</ul><h2>
+<a name="using-git-submodules" class="anchor" href="#using-git-submodules"><span class="octicon octicon-link"></span></a>Using git submodules</h2>
 
 <p>To use this module you can easily copy the files and put them in your project.
 A more elegant way is to use <a href="http://git-scm.com/book/en/Git-Tools-Submodules">git submodule</a>. Hence, you can keep up with latest improvements. In you plugin directory, do</p>
@@ -160,7 +174,7 @@ A more elegant way is to use <a href="http://git-scm.com/book/en/Git-Tools-Submo
       </section>
       <footer>
         <p>Project maintained by <a href="https://github.com/3nids">3nids</a></p>
-        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="http://twitter.com/#!/michigangraham">mattgraham</a></small></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></small></p>
       </footer>
     </div>
     <!--[if !IE]><script>fixScale(document);</script><![endif]-->
