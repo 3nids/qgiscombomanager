@@ -39,7 +39,7 @@ AvailableOptions = {"groupLayers": (False, True),
                     "finishInit": (True, False),
                     "legendInterface": None,
                     "skipLayers": list,
-                    "emptyItemFirst": True}
+                    "emptyItemFirst": False}
 
 
 class LayerCombo():

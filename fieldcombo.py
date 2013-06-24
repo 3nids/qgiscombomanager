@@ -35,7 +35,7 @@ from layercombo import VectorLayerCombo
 
 from optiondictionary import OptionDictionary
 
-AvailableOptions = {"emptyItemFirst": True,
+AvailableOptions = {"emptyItemFirst": False,
                     "fieldType": None}
 
 
