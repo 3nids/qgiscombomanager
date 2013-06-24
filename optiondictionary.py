@@ -59,3 +59,9 @@ class OptionDictionary(dict):
                     self[key] = value()
                 else:
                     self[key] = value
+
+    def __getattr__(self, item):
+        return self[item]
+
+    def __setattr__(self, key, value):
+        self[key] = value

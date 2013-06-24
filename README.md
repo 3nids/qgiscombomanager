@@ -53,6 +53,7 @@ RasterLayerCombo(widget, initLayer="", options={})
 * **legendInterface**: if `groupLayers is True`, you must provide `iface.legendInterface()` for this option.
 * **finishInit**: True/False. Set it to  `False` if the `LayerCombo` object must be returned before its items are filled with layers.
 * **skipLayers**: a list of layer IDs or lambda functions returning layer IDs which will not to be shown in the combo box.
+* **emptyItemFirst**: True/False. If true, a first empty item is listed first in the combo box.
 
 *used for vector layer combos
 
@@ -73,6 +74,10 @@ FieldCombo(widget, vectorLayerCombo, initField="", fieldType=None)
 * **widget**: the qcombobox widget
 * **vectorLayerCombo**: the combobox defining the vector layer
 * **initField**: the initially selected field name or a lambda function returning the name (it could look for a value in settings)
+* **options**: a dictionnary of options: {"opt1": val1, "opt2": val2, etc.}.
+
+**Options** are listed hereunder, default values being listed first:
+* **emptyItemFirst**: True/False. If true, a first empty item is listed first in the combo box.
 * **fieldType**: restrain the possible selection to a certain type of field (see [QGIS doc](http://qgis.org/api/classQgsField.html#a00409d57dc65d6155c6d08085ea6c324) or [Qt doc](http://developer.qt.nokia.com/doc/qt-4.8/qmetatype.html#Type-enum)).
 
 This class offer convenient methods:

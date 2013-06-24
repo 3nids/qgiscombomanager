@@ -38,7 +38,8 @@ AvailableOptions = {"groupLayers": (False, True),
                     "dataProvider": None,
                     "finishInit": (True, False),
                     "legendInterface": None,
-                    "skipLayers": list}
+                    "skipLayers": list,
+                    "emptyItemFirst": True}
 
 
 class LayerCombo():
@@ -52,19 +53,19 @@ class LayerCombo():
         self.layerType = layerType
 
         # finish init (set to false if LayerCombo must be returned before items are completed)
-        if self.options["finishInit"]:
+        if self.options.finishInit:
             self.finishInit()
 
     def finishInit(self):
         # connect signal for layers and populate combobox
         QgsMapLayerRegistry.instance().layersAdded.connect(self.__canvasLayersChanged)
-        if self.options["groupLayers"]:
-            self.options["legendInterface"].groupRelationsChanged.connect(self.__canvasLayersChanged)
+        if self.options.groupLayers:
+            self.options.legendInterface.groupRelationsChanged.connect(self.__canvasLayersChanged)
         self.__canvasLayersChanged()
 
     def getLayer(self):
         i = self.widget.currentIndex()
-        if i == 0:
+        if self.options.emptyItemFirst and i == 0:
             return None
         layerId = self.widget.itemData(i)
         return QgsMapLayerRegistry.instance().mapLayer(layerId)
@@ -78,16 +79,19 @@ class LayerCombo():
 
     def __canvasLayersChanged(self, layerList=[]):
         self.widget.clear()
-        self.widget.addItem("")
-        if not self.options["groupLayers"]:
+        offset = 0
+        if self.options.emptyItemFirst:
+            offset = 1
+            self.widget.addItem("")
+        if not self.options.groupLayers:
             for layerId, layer in QgsMapLayerRegistry.instance().mapLayers().iteritems():
                 if not self.__checkLayer(layer):
                     continue
                 self.widget.addItem(layer.name(), layerId)
                 if layerId == self.initLayer:
-                    self.widget.setCurrentIndex(self.widget.count()-1)
+                    self.widget.setCurrentIndex(self.widget.count()-offset)
         else:
-            if self.options["legendInterface"] is None:
+            if self.options.legendInterface is None:
                 raise NameError("Cannot display layers grouped if legendInterface is not given in the options.")
             for layerGroup in self.options["legendInterface"].groupLayerRelationship():
                 groupName = layerGroup[0]
@@ -129,7 +133,7 @@ class LayerCombo():
 
     def __checkLayer(self, layer):
         # skip layer
-        for skip in self.options["skipLayers"]:
+        for skip in self.options.skipLayers:
             if hasattr(skip, '__call__'):
                 if layer.id() == skip():
                     return False
@@ -137,17 +141,17 @@ class LayerCombo():
                 if layer.id() == skip:
                     return False
         # data provider
-        if self.options["dataProvider"] is not None and layer.dataProvider().name() != self.options["dataProvider"]:
+        if self.options.dataProvider is not None and layer.dataProvider().name() != self.options.dataProvider:
             return False
         # vector layer
         if self.layerType == QgsMapLayer.VectorLayer:
             if layer.type() != QgsMapLayer.VectorLayer:
                 return False
             # if wanted, filter on hasGeometry
-            if self.options["hasGeometry"] is not None and layer.hasGeometryType() != self.options["hasGeometry"]:
+            if self.options.hasGeometry is not None and layer.hasGeometryType() != self.options.hasGeometry:
                 return False
             # if wanted, filter on the geoetry type
-            if self.options["geomType"] is not None and layer.geometryType() != self.options["geomType"]:
+            if self.options.geomType is not None and layer.geometryType() != self.options.geomType:
                 return False
         # raster layer
         if self.layerType == QgsMapLayer.RasterLayer:

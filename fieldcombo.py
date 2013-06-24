@@ -33,15 +33,20 @@ from qgis.core import QgsVectorLayer
 
 from layercombo import VectorLayerCombo
 
+from optiondictionary import OptionDictionary
+
+AvailableOptions = {"emptyItemFirst": True,
+                    "fieldType": None}
+
 
 class FieldCombo():
-    def __init__(self, widget, vectorLayerCombo, initField="", fieldType=None):
+    def __init__(self, widget, vectorLayerCombo, initField="", options={}):
         if not isinstance(vectorLayerCombo, VectorLayerCombo):
             raise NameError("You must provide a VectorLayerCombo.")
+        self.options = OptionDictionary(AvailableOptions, options)
         self.widget = widget
         self.layerCombo = vectorLayerCombo
         self.initField = initField
-        self.fieldType = fieldType
         QObject.connect(self.layerCombo.widget, SIGNAL("currentIndexChanged(int)"), self.__layerChanged)
         self.layer = None
         self.__layerChanged()
@@ -55,7 +60,8 @@ class FieldCombo():
         else:
             initField = self.initField
         self.widget.clear()
-        self.widget.addItem("")
+        if self.options.emptyItemFirst:
+            self.widget.addItem("")
         self.layer = self.layerCombo.getLayer()
         if self.layer is None:
             return
@@ -75,9 +81,9 @@ class FieldCombo():
                 self.widget.setCurrentIndex(i)
 
     def __isFieldValid(self, idx):
-        if self.fieldType is None:
+        if self.options.fieldType is None:
             return True
-        return self.layer.dataProvider().fields()[idx].type() == self.fieldType
+        return self.layer.dataProvider().fields()[idx].type() == self.options.fieldType
 
     def isValid(self):
         idx = self.getFieldIndex()
@@ -87,18 +93,18 @@ class FieldCombo():
 
     def getFieldAlias(self):
         i = self.widget.currentIndex()
-        if i == 0:
+        if self.options.emptyItemFirst and i == 0:
             return ""
         return self.widget.currentText()
 
     def getFieldName(self):
         i = self.widget.currentIndex()
-        if i == 0:
+        if self.options.emptyItemFirst and i == 0:
             return ""
         return self.widget.itemData(i)
 
     def getFieldIndex(self):
         i = self.widget.currentIndex()
-        if i == 0:
+        if self.options.emptyItemFirst and i == 0:
             return None
         return self.layer.fieldNameIndex(self.getFieldName())
