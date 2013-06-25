@@ -74,7 +74,11 @@ class LayerCombo():
         if layer is None:
             idx = -1
         else:
-            idx = self.widget.findData(layer.id(), Qt.UserRole)
+            if type(layer) == str:
+                layerid = layer
+            else:
+                layerid = layer.id()
+            idx = self.widget.findData(layerid, Qt.UserRole)
         self.widget.setCurrentIndex(idx)
 
     def __canvasLayersChanged(self, layerList=[]):
