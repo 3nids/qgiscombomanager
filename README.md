@@ -60,7 +60,7 @@ RasterLayerCombo(widget, initLayer="", options={})
 These classes offer convenient methods:
 
 * `getLayer()`: returns the layer currently selected in the combo box
-* `setLayer(layer)`: set the given layer as currently selected in the combo box
+* `setLayer(layer)`: set the current item in the combo box (layer can be a layer or a layer id).
 
 
 ## Field combos
