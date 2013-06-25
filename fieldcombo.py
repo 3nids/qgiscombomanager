@@ -108,3 +108,7 @@ class FieldCombo():
         if self.options.emptyItemFirst and i == 0:
             return None
         return self.layer.fieldNameIndex(self.getFieldName())
+
+    def setField(self, fieldName):
+        idx = self.widget.findData(fieldName, Qt.UserRole)
+        self.widget.setCurrentIndex(idx)
