@@ -49,7 +49,7 @@ class LayerCombo():
         if hasattr(initLayer, '__call__'):
             self.initLayer = lambda: initLayer()
         else:
-            self.initLayer = initLayer
+            self.initLayer = lambda: initLayer
         self.layerType = layerType
 
         # finish init (set to false if LayerCombo must be returned before items are completed)
@@ -90,7 +90,7 @@ class LayerCombo():
                 if not self.__checkLayer(layer):
                     continue
                 self.widget.addItem(layer.name(), layerId)
-                if layerId == self.initLayer:
+                if layerId == self.initLayer():
                     self.widget.setCurrentIndex(self.widget.count()-1)
         else:
             if self.options.legendInterface is None:
@@ -129,7 +129,7 @@ class LayerCombo():
             if not self.__checkLayer(layer):
                 return False
             self.widget.insertItem(position, preStr+layer.name(), layer.id())
-            if layer.id() == self.initLayer:
+            if layer.id() == self.initLayer():
                 self.widget.setCurrentIndex(position)
         return True
 
