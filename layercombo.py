@@ -83,9 +83,7 @@ class LayerCombo():
 
     def __canvasLayersChanged(self, layerList=[]):
         self.widget.clear()
-        offset = 0
         if self.options.emptyItemFirst:
-            offset = 1
             self.widget.addItem("")
         if not self.options.groupLayers:
             for layerId, layer in QgsMapLayerRegistry.instance().mapLayers().iteritems():
@@ -93,7 +91,7 @@ class LayerCombo():
                     continue
                 self.widget.addItem(layer.name(), layerId)
                 if layerId == self.initLayer:
-                    self.widget.setCurrentIndex(self.widget.count()-offset)
+                    self.widget.setCurrentIndex(self.widget.count()-1)
         else:
             if self.options.legendInterface is None:
                 raise NameError("Cannot display layers grouped if legendInterface is not given in the options.")
@@ -132,7 +130,7 @@ class LayerCombo():
                 return False
             self.widget.insertItem(position, preStr+layer.name(), layer.id())
             if layer.id() == self.initLayer:
-                self.widget.setCurrentIndex(self.widget.count() - 1)
+                self.widget.setCurrentIndex(position)
         return True
 
     def __checkLayer(self, layer):
