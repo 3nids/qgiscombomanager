@@ -47,7 +47,7 @@ class LayerCombo():
         self.widget = widget
         self.options = OptionDictionary(AvailableOptions, options)
         if hasattr(initLayer, '__call__'):
-            self.initLayer = initLayer()
+            self.initLayer = lambda: initLayer()
         else:
             self.initLayer = initLayer
         self.layerType = layerType
