@@ -50,7 +50,6 @@ class BandCombo():
         else:
             initBand = self.initBand
         self.widget.clear()
-        self.widget.addItem("")
         self.layer = self.layerCombo.getLayer()
         if self.layer is None:
             return
@@ -61,4 +60,4 @@ class BandCombo():
                 self.widget.setCurrentIndex(b)
 
     def getBand(self):
-        return self.widget.currentIndex()
+        return self.widget.currentIndex()+1
