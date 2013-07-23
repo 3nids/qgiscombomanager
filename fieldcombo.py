@@ -47,14 +47,14 @@ class FieldCombo():
         self.widget = widget
         self.layerCombo = vectorLayerCombo
         self.initField = initField
-        QObject.connect(self.layerCombo.widget, SIGNAL("currentIndexChanged(int)"), self.__layerChanged)
+        self.layerCombo.widget.currentIndexChanged.connect(self.__layerChanged)
         self.layer = None
         self.__layerChanged()
 
     def __layerChanged(self):
         if type(self.layer) == QgsVectorLayer:
-            QObject.disconnect(self.layer, SIGNAL("attributeAdded(int)"),   self.__layerChanged)
-            QObject.disconnect(self.layer, SIGNAL("attributeDeleted(int)"), self.__layerChanged)
+            self.layer.attributeAdded.disconnect(self.__layerChanged)
+            self.layer.attributeDeleted.disconnect(self.__layerChanged)
         if hasattr(self.initField, '__call__'):
             initField = self.initField()
         else:
@@ -65,8 +65,9 @@ class FieldCombo():
         self.layer = self.layerCombo.getLayer()
         if self.layer is None:
             return
-        QObject.connect(self.layer, SIGNAL("attributeAdded(int)"),   self.__layerChanged)
-        QObject.connect(self.layer, SIGNAL("attributeDeleted(int)"), self.__layerChanged)
+        self.layer.layerDeleted.connect(self.__layerDeleted)
+        self.layer.attributeAdded.connect(self.__layerChanged)
+        self.layer.attributeDeleted.connect(self.__layerChanged)
         i = 0
         for idx, field in enumerate(self.layer.pendingFields()):
             i += 1
@@ -79,6 +80,9 @@ class FieldCombo():
                 continue
             if fieldName == initField:
                 self.widget.setCurrentIndex(i)
+
+    def __layerDeleted(self):
+        self.layer = None
 
     def __isFieldValid(self, idx):
         if self.options.fieldType is None:

@@ -59,6 +59,7 @@ class LayerCombo():
     def finishInit(self):
         # connect signal for layers and populate combobox
         QgsMapLayerRegistry.instance().layersAdded.connect(self.__canvasLayersChanged)
+        QgsMapLayerRegistry.instance().layersRemoved.connect(self.__canvasLayersChanged)
         if self.options.groupLayers:
             self.options.legendInterface.groupRelationsChanged.connect(self.__canvasLayersChanged)
         self.__canvasLayersChanged()
