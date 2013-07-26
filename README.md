@@ -53,7 +53,6 @@ RasterLayerCombo(widget, initLayer="", options={})
 * **legendInterface**: if `groupLayers is True`, you must provide `iface.legendInterface()` for this option.
 * **finishInit**: True/False. Set it to  `False` if the `LayerCombo` object must be returned before its items are filled with layers.
 * **skipLayers**: a list of layer IDs or lambda functions returning layer IDs which will not to be shown in the combo box.
-* **emptyItemFirst**: True/False. If true, a first empty item is listed first in the combo box.
 
 *used for vector layer combos
 

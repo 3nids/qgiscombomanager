@@ -35,8 +35,7 @@ from layercombo import VectorLayerCombo
 
 from optiondictionary import OptionDictionary
 
-AvailableOptions = {"emptyItemFirst": False,
-                    "fieldType": None}
+AvailableOptions = {"fieldType": None}
 
 
 class FieldCombo():
@@ -60,8 +59,6 @@ class FieldCombo():
         else:
             initField = self.initField
         self.widget.clear()
-        if self.options.emptyItemFirst:
-            self.widget.addItem("")
         self.layer = self.layerCombo.getLayer()
         if self.layer is None:
             return
@@ -97,19 +94,19 @@ class FieldCombo():
 
     def getFieldAlias(self):
         i = self.widget.currentIndex()
-        if self.options.emptyItemFirst and i == 0:
+        if i < 0:
             return ""
         return self.widget.currentText()
 
     def getFieldName(self):
         i = self.widget.currentIndex()
-        if self.options.emptyItemFirst and i == 0:
+        if i < 0:
             return ""
         return self.widget.itemData(i)
 
     def getFieldIndex(self):
         i = self.widget.currentIndex()
-        if self.options.emptyItemFirst and i == 0:
+        if i < 0:
             return None
         return self.layer.fieldNameIndex(self.getFieldName())
 

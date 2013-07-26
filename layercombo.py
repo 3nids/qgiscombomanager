@@ -29,6 +29,7 @@
 
 from PyQt4.QtCore import Qt
 from qgis.core import QGis, QgsMapLayerRegistry, QgsMapLayer
+import string
 
 from optiondictionary import OptionDictionary
 
@@ -38,8 +39,11 @@ AvailableOptions = {"groupLayers": (False, True),
                     "dataProvider": None,
                     "finishInit": (True, False),
                     "legendInterface": None,
-                    "skipLayers": list,
-                    "emptyItemFirst": False}
+                    "skipLayers": list}
+
+
+def remove_accents(data):
+    return filter(lambda char: char in string.ascii_uppercase, data.upper())
 
 
 class LayerCombo():
@@ -66,7 +70,7 @@ class LayerCombo():
 
     def getLayer(self):
         i = self.widget.currentIndex()
-        if self.options.emptyItemFirst and i == 0:
+        if i < 0:
             return None
         layerId = self.widget.itemData(i)
         return QgsMapLayerRegistry.instance().mapLayer(layerId)
@@ -84,15 +88,17 @@ class LayerCombo():
 
     def __canvasLayersChanged(self, layerList=[]):
         self.widget.clear()
-        if self.options.emptyItemFirst:
-            self.widget.addItem("")
         if not self.options.groupLayers:
+            layerList = dict()
             for layerId, layer in QgsMapLayerRegistry.instance().mapLayers().iteritems():
                 if not self.__checkLayer(layer):
                     continue
-                self.widget.addItem(layer.name(), layerId)
-                if layerId == self.initLayer():
-                    self.widget.setCurrentIndex(self.widget.count()-1)
+                layerList[remove_accents(layer.name())] = {"id": layerId, "name": layer.name()}
+            for key in sorted(layerList):
+                layerId = layerList[key]["id"]
+                self.widget.addItem(layerList[key]["name"], layerId)
+            i = self.widget.findData(self.initLayer())
+            self.widget.setCurrentIndex(i)
         else:
             if self.options.legendInterface is None:
                 raise NameError("Cannot display layers grouped if legendInterface is not given in the options.")
