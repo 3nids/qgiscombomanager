@@ -40,8 +40,6 @@ AvailableOptions = {"fieldType": None}
 
 class FieldCombo(QObject):
     fieldChanged = pyqtSignal()
-    fieldChangedName = pyqtSignal(str)
-    fieldChangedIndex = pyqtSignal(int)
 
     def __init__(self, widget, vectorLayerCombo, initField="", options={}):
         QObject.__init__(self)
@@ -58,8 +56,6 @@ class FieldCombo(QObject):
 
     def currentIndexChanged(self, i):
         self.fieldChanged.emit()
-        self.fieldChangedName.emit(self.getFieldName())
-        self.fieldChangedIndex.emit(self.getFieldIndex())
 
     def __layerChanged(self):
         if type(self.layer) == QgsVectorLayer:

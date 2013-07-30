@@ -59,13 +59,13 @@ class LayerCombo(QObject):
         else:
             self.initLayer = lambda: initLayer
         self.layerType = layerType
-        self.widget.currentIndexChanged.connect(self.currentIndexchanged)
+        self.widget.currentIndexChanged.connect(self.__currentIndexChanged)
 
         # finish init (set to false if LayerCombo must be returned before items are completed)
         if self.options.finishInit:
             self.finishInit()
 
-    def currentIndexchanged(self, dummy):
+    def __currentIndexChanged(self, dummy):
         self.layerChanged.emit()
         self.layerChangedLayer.emit(self.getLayer())
 

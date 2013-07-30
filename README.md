@@ -91,7 +91,7 @@ This class offer convenient methods:
 
 The FieldCombo will also emit a signal:
 
-* `fieldChanged(str)`, `fieldChangedName(str)` and `fieldChangedIndex(int)`: whenever the field changes it will emit these signals with the corresponding arguments.
+* `fieldChanged()`: whenever the field changes it will emit this signal.
 
 ## Band combos
 
