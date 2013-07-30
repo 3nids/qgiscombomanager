@@ -28,7 +28,7 @@
 #---------------------------------------------------------------------
 
 
-from PyQt4.QtCore import SIGNAL, QObject, Qt
+from PyQt4.QtCore import Qt, QObject, pyqtSignal
 from qgis.core import QgsVectorLayer
 
 from layercombo import VectorLayerCombo
@@ -38,17 +38,24 @@ from optiondictionary import OptionDictionary
 AvailableOptions = {"fieldType": None}
 
 
-class FieldCombo():
+class FieldCombo(QObject):
+    fieldChanged = pyqtSignal(str)
+
     def __init__(self, widget, vectorLayerCombo, initField="", options={}):
+        QObject.__init__(self)
         if not isinstance(vectorLayerCombo, VectorLayerCombo):
             raise NameError("You must provide a VectorLayerCombo.")
         self.options = OptionDictionary(AvailableOptions, options)
         self.widget = widget
         self.layerCombo = vectorLayerCombo
         self.initField = initField
-        self.layerCombo.widget.currentIndexChanged.connect(self.__layerChanged)
+        self.layerCombo.layerChanged.connect(self.__layerChanged)
+        self.widget.currentIndexChanged.connect(self.currentIndexChanged)
         self.layer = None
         self.__layerChanged()
+
+    def currentIndexChanged(self, i):
+        self.fieldChanged.emit(self.getFieldName())
 
     def __layerChanged(self):
         if type(self.layer) == QgsVectorLayer:

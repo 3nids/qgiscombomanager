@@ -56,10 +56,14 @@ RasterLayerCombo(widget, initLayer="", options={})
 
 *used for vector layer combos
 
-These classes offer convenient methods:
+This class offer convenient methods:
 
 * `getLayer()`: returns the layer currently selected in the combo box
 * `setLayer(layer)`: set the current layer in the combo box (layer can be a layer or a layer id).
+
+The LayerCombo will also emit signals:
+
+* `layerChanged()` and `layerChangedLayer(QgsMapLayer)`: whenever the layer changes.
 
 
 ## Field combos
@@ -85,6 +89,10 @@ This class offer convenient methods:
 * `getFieldIndex()`: returns the field index of the currently selected field
 * `setField(fieldName)`: set the current field in the combo box
 
+The FieldCombo will also emit a signal:
+
+* `fieldChanged(str)`: whenever the field changes it will emit this signal with the new field name.
+
 ## Band combos
 
 Similarly to field combos, a combo box can be assigned to list the bands related to a given RasterLayerCombo.
@@ -92,12 +100,16 @@ Similarly to field combos, a combo box can be assigned to list the bands related
 ```python
 BandCombo(widget, rasterLayerCombo, initBand=None)
 ```
-
 * **widget**: the qcombobox widget
 * **rasterLayerCombo**: the combobox defining the raster layer
 * **initBand**: the initially selected band (integer) or a lambda function returning it (it could look for a value in settings)
 
+This class offer a convenient method:
+* `getBand()`: returns the name of the currently selected band
 
+The BandCombo will also emit a signal:
+
+* `bandChanged(str)`: whenever the band changes it will emit this signal with the new band name.
 
 ## Using git submodules
 

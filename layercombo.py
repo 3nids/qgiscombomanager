@@ -27,7 +27,7 @@
 #
 #---------------------------------------------------------------------
 
-from PyQt4.QtCore import Qt
+from PyQt4.QtCore import Qt, QObject, pyqtSignal
 from qgis.core import QGis, QgsMapLayerRegistry, QgsMapLayer
 import string
 
@@ -46,8 +46,12 @@ def remove_accents(data):
     return filter(lambda char: char in string.ascii_uppercase, data.upper())
 
 
-class LayerCombo():
+class LayerCombo(QObject):
+    layerChanged = pyqtSignal()
+    layerChangedLayer = pyqtSignal(QgsMapLayer)
+
     def __init__(self, widget, initLayer="", options={}, layerType=None):
+        QObject.__init__(self)
         self.widget = widget
         self.options = OptionDictionary(AvailableOptions, options)
         if hasattr(initLayer, '__call__'):
@@ -55,10 +59,15 @@ class LayerCombo():
         else:
             self.initLayer = lambda: initLayer
         self.layerType = layerType
+        self.widget.currentIndexChanged.connect(self.currentIndexchanged)
 
         # finish init (set to false if LayerCombo must be returned before items are completed)
         if self.options.finishInit:
             self.finishInit()
+
+    def currentIndexchanged(self, dummy):
+        self.layerChanged.emit()
+        self.layerChangedLayer.emit(self.getLayer())
 
     def finishInit(self):
         # connect signal for layers and populate combobox

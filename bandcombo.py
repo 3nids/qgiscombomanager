@@ -28,21 +28,27 @@
 #---------------------------------------------------------------------
 
 
-from PyQt4.QtCore import SIGNAL, QObject
+from PyQt4.QtCore import pyqtSignal
 
 from layercombo import RasterLayerCombo
 
 
 class BandCombo():
+    bandChanged = pyqtSignal(str)
+
     def __init__(self, widget, rasterLayerCombo, initBand=None):
         if not isinstance(rasterLayerCombo, RasterLayerCombo):
             raise NameError("You must provide a VectorLayerCombo.")
         self.widget = widget
         self.layerCombo = rasterLayerCombo
         self.initBand = initBand
-        QObject.connect(self.layerCombo.widget, SIGNAL("currentIndexChanged(int)"), self.__layerChanged)
+        self.layerCombo.layerChanged.connect(self.__layerChanged)
+        self.widget.currentIndexChanged.connect(self.currentIndexChanged)
         self.layer = None
         self.__layerChanged()
+
+    def currentIndexChanged(self, i):
+        self.bandChanged.emit(self.getBand())
 
     def __layerChanged(self):
         if hasattr(self.initBand, '__call__'):
