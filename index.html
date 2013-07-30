@@ -102,17 +102,20 @@ getting out of scope in python.</p>
 <strong>finishInit</strong>: True/False. Set it to  <code>False</code> if the <code>LayerCombo</code> object must be returned before its items are filled with layers.</li>
 <li>
 <strong>skipLayers</strong>: a list of layer IDs or lambda functions returning layer IDs which will not to be shown in the combo box.</li>
-<li>
-<strong>emptyItemFirst</strong>: True/False. If true, a first empty item is listed first in the combo box.</li>
 </ul><p>*used for vector layer combos</p>
 
-<p>These classes offer convenient methods:</p>
+<p>This class offer convenient methods:</p>
 
 <ul>
 <li>
 <code>getLayer()</code>: returns the layer currently selected in the combo box</li>
 <li>
-<code>setLayer(layer)</code>: set the given layer as currently selected in the combo box</li>
+<code>setLayer(layer)</code>: set the current layer in the combo box (layer can be a layer or a layer id).</li>
+</ul><p>The LayerCombo will also emit signals:</p>
+
+<ul>
+<li>
+<code>layerChanged()</code> and <code>layerChangedLayer(QgsMapLayer)</code>: whenever the layer changes.</li>
 </ul><h2>
 <a name="field-combos" class="anchor" href="#field-combos"><span class="octicon octicon-link"></span></a>Field combos</h2>
 
@@ -146,6 +149,13 @@ getting out of scope in python.</p>
 <code>getFieldAlias()</code>: returns the alias of the currently selected field</li>
 <li>
 <code>getFieldIndex()</code>: returns the field index of the currently selected field</li>
+<li>
+<code>setField(fieldName)</code>: set the current field in the combo box</li>
+</ul><p>The FieldCombo will also emit a signal:</p>
+
+<ul>
+<li>
+<code>fieldChanged(str)</code>, <code>fieldChangedName(str)</code> and <code>fieldChangedIndex(int)</code>: whenever the field changes it will emit these signals with the corresponding arguments.</li>
 </ul><h2>
 <a name="band-combos" class="anchor" href="#band-combos"><span class="octicon octicon-link"></span></a>Band combos</h2>
 
@@ -161,6 +171,16 @@ getting out of scope in python.</p>
 <strong>rasterLayerCombo</strong>: the combobox defining the raster layer</li>
 <li>
 <strong>initBand</strong>: the initially selected band (integer) or a lambda function returning it (it could look for a value in settings)</li>
+</ul><p>This class offer a convenient method:</p>
+
+<ul>
+<li>
+<code>getBand()</code>: returns the name of the currently selected band</li>
+</ul><p>The BandCombo will also emit a signal:</p>
+
+<ul>
+<li>
+<code>bandChanged(str)</code>: whenever the band changes it will emit this signal with the new band name.</li>
 </ul><h2>
 <a name="using-git-submodules" class="anchor" href="#using-git-submodules"><span class="octicon octicon-link"></span></a>Using git submodules</h2>
 
