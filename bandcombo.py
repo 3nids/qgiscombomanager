@@ -28,15 +28,16 @@
 #---------------------------------------------------------------------
 
 
-from PyQt4.QtCore import pyqtSignal
+from PyQt4.QtCore import pyqtSignal, QObject
 
 from layercombo import RasterLayerCombo
 
 
-class BandCombo():
-    bandChanged = pyqtSignal(str)
+class BandCombo(QObject):
+    bandChanged = pyqtSignal()
 
     def __init__(self, widget, rasterLayerCombo, initBand=None):
+        QObject.__init__(self)
         if not isinstance(rasterLayerCombo, RasterLayerCombo):
             raise NameError("You must provide a VectorLayerCombo.")
         self.widget = widget
@@ -48,7 +49,7 @@ class BandCombo():
         self.__layerChanged()
 
     def currentIndexChanged(self, i):
-        self.bandChanged.emit(self.getBand())
+        self.bandChanged.emit()
 
     def __layerChanged(self):
         if hasattr(self.initBand, '__call__'):
