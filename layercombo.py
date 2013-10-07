@@ -106,7 +106,7 @@ class LayerCombo(QObject):
             for key in sorted(layerList):
                 layerId = layerList[key]["id"]
                 self.widget.addItem(layerList[key]["name"], layerId)
-            i = self.widget.findData(self.initLayer())
+            i = self.widget.findData(self.initLayer(),0)
             self.widget.setCurrentIndex(i)
         else:
             if self.options.legendInterface is None:
