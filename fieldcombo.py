@@ -91,7 +91,8 @@ class FieldCombo(QObject):
     def __isFieldValid(self, idx):
         if self.options.fieldType is None:
             return True
-        return self.layer.dataProvider().fields()[idx].type() == self.options.fieldType
+        #return self.layer.dataProvider().fields()[idx].type() == self.options.fieldType
+        return self.layer.pendingFields()[idx].type() == self.options.fieldType
 
     def isValid(self):
         idx = self.getFieldIndex()
