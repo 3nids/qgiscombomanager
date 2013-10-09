@@ -72,7 +72,7 @@ class FieldCombo(QObject):
         self.layer.layerDeleted.connect(self.__layerDeleted)
         self.layer.attributeAdded.connect(self.__layerChanged)
         self.layer.attributeDeleted.connect(self.__layerChanged)
-        i = 0
+        i = -1
         for idx, field in enumerate(self.layer.pendingFields()):
             i += 1
             fieldAlias = self.layer.attributeDisplayName(idx)
@@ -91,7 +91,8 @@ class FieldCombo(QObject):
     def __isFieldValid(self, idx):
         if self.options.fieldType is None:
             return True
-        return self.layer.dataProvider().fields()[idx].type() == self.options.fieldType
+        #return self.layer.dataProvider().fields()[idx].type() == self.options.fieldType
+        return self.layer.pendingFields()[idx].type() == self.options.fieldType
 
     def isValid(self):
         idx = self.getFieldIndex()
