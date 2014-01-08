@@ -52,6 +52,7 @@ class FieldCombo(QObject):
         self.layerCombo.layerChanged.connect(self.__layerChanged)
         self.widget.currentIndexChanged.connect(self.currentIndexChanged)
         self.layer = None
+        self.nFields = 0
         self.__layerChanged()
 
     def currentIndexChanged(self, i):
@@ -66,9 +67,11 @@ class FieldCombo(QObject):
         else:
             initField = self.initField
         self.widget.clear()
+        self.nFields = 0
         self.layer = self.layerCombo.getLayer()
         if self.layer is None:
             return
+        self.nFields = self.layer.pendingFields().count()
         self.layer.layerDeleted.connect(self.__layerDeleted)
         self.layer.attributeAdded.connect(self.__layerChanged)
         self.layer.attributeDeleted.connect(self.__layerChanged)
@@ -102,22 +105,24 @@ class FieldCombo(QObject):
 
     def getFieldAlias(self):
         i = self.widget.currentIndex()
-        if i < 0:
+        if i < 0 or i > self.nFields-1:
             return ""
         return self.widget.currentText()
 
     def getFieldName(self):
         i = self.widget.currentIndex()
-        if i < 0:
+        if i < 0 or i > self.nFields-1:
             return ""
         return self.widget.itemData(i)
 
     def getFieldIndex(self):
         i = self.widget.currentIndex()
-        if i < 0:
+        if i < 0 or i > self.nFields-1:
             return None
         return self.layer.fieldNameIndex(self.getFieldName())
 
     def setField(self, fieldName):
         idx = self.widget.findData(fieldName, Qt.UserRole)
-        self.widget.setCurrentIndex(idx)
+        if idx != -1:
+            self.widget.setCurrentIndex(idx)
+        return idx
