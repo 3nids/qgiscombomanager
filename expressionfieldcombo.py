@@ -53,10 +53,12 @@ class ExpressionFieldCombo(FieldCombo):
             self.addExpression(expression)
 
     def getExpression(self):
+        if self.widget.currentIndex() < 0:
+            return None,None
         if self.widget.currentIndex() <= self.nFields-1:
-            return self.getFieldName()
+            return self.getFieldName(), False
         else:
-            return self.widget.currentText()
+            return self.widget.currentText(), True
 
     def setExpression(self, expr):
         if self.setField(expr) != -1:
