@@ -37,7 +37,7 @@ class BandCombo(QObject):
     bandChanged = pyqtSignal()
 
     def __init__(self, widget, rasterLayerCombo, initBand=None):
-        QObject.__init__(self)
+        QObject.__init__(self, widget)
         if not isinstance(rasterLayerCombo, RasterLayerCombo):
             raise NameError("You must provide a VectorLayerCombo.")
         self.widget = widget
