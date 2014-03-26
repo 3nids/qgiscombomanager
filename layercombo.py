@@ -51,7 +51,7 @@ class LayerCombo(QObject):
     layerChangedLayer = pyqtSignal(QgsMapLayer)
 
     def __init__(self, widget, initLayer="", options={}, layerType=None):
-        QObject.__init__(self)
+        QObject.__init__(self, widget)
         self.widget = widget
         self.options = OptionDictionary(AvailableOptions, options)
         if hasattr(initLayer, '__call__'):

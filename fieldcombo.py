@@ -42,7 +42,7 @@ class FieldCombo(QObject):
     fieldChanged = pyqtSignal()
 
     def __init__(self, widget, vectorLayerCombo, initField="", options={}):
-        QObject.__init__(self)
+        QObject.__init__(self, widget)
         if not isinstance(vectorLayerCombo, VectorLayerCombo):
             raise NameError("You must provide a VectorLayerCombo.")
         self.options = OptionDictionary(AvailableOptions, options)
