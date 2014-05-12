@@ -96,6 +96,10 @@ class LayerCombo(QObject):
         self.widget.setCurrentIndex(idx)
 
     def __canvasLayersChanged(self, layerList=[]):
+        # Avoid errors when QGIS is closing
+        if QgsMapLayerRegistry is None:
+            return
+
         self.widget.clear()
         if not self.options.groupLayers:
             layerList = dict()
